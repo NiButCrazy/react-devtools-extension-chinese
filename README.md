@@ -21,17 +21,22 @@
 3. **最后`electron`程序里直接引用该扩展ID**，具体可参阅[这个模板](https://github.com/NiButCrazy/Vite-Electron-React-Template)
 ```typescript
 /**
- * 加载谷歌扩展，hphnghgoegienpbegnhcepbchegdeife 是扩展ID
+ * 加载谷歌扩展
  */
-export function load_extensions() {
-  installExtension('hphnghgoegienpbegnhcepbchegdeife').then(() => {
-    session.defaultSession.getAllExtensions().map((e) => {
-      session.defaultSession.loadExtension(e.path)
-      console.log(`已加载扩展:  ${e.name}`)
-    })
-  }).catch((err) => {
-    console.log('无法加载扩展: ', err)
+export function load_extensions(mainWindow: BrowserWindow) {
+  // 必须是绝对路径
+  const reactDevtools = path.join(__dirname, '../../static/react-devtools')
+  const ses = mainWindow.webContents.session
+  ses.extensions.loadExtension(reactDevtools)
+  // ! 点睛之笔!!!
+  //  React 开发者工具的内容脚本尝试与后台服务工作者通信，而后者在启动时（首次安装后）并未运行,所以手动运行
+  ses.extensions.on('extension-ready', (_, extension) => {
+    const manifest = extension.manifest
+    if (manifest.manifest_version === 3 && manifest?.background?.service_worker) {
+      ses.serviceWorkers.startWorkerForScope(extension.url)
+    }
   })
 }
+
 
 ```
