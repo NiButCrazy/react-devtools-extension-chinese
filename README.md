@@ -11,7 +11,8 @@
 `[该扩展程序未列在 Chrome 应用商店中，并可能是在您不知情的情况下添加的]`，
 解决方法详见[这篇教程](https://cloud.tencent.com/developer/article/1506583) 
 ### Electron
-> [!NOTE] 前两步是针对以前的electron，最新版直接跳到第三步就行了
+> [!NOTE]
+> 前两步是针对以前的electron，最新版直接跳到第三步就行了
 1. 程序运行之后，会在`C:\Users\Administrator\AppData\Roaming\你的项目名称\`这里生成扩展文件夹
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/18f0a4c7-6c83-49a0-9a16-9ba7d87cf970" />
 
